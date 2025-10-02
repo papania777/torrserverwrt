@@ -35,7 +35,7 @@ addUser() {
             echo " - Пользователь $username уже существует!"
             return 0
         else
-            adduser -D -H -h "$dirInstall" -s /bin/false -G nogroup "$username"
+            shadow-useradd -D -H -h "$dirInstall" -s /bin/false -G nogroup "$username"
             if [ $? -eq 0 ]; then
                 chmod 755 "$dirInstall"
                 echo " - Пользователь $username добавлен!"
@@ -51,7 +51,7 @@ delUser() {
     if isRoot; then
         [ "$username" = "root" ] && return 0
         if grep -q "^$username:" /etc/passwd; then
-            deluser "$username" 2>/dev/null
+            shadow-userdel "$username" 2>/dev/null
             [ $? -eq 0 ] && echo " - Пользователь $username удален!" || echo " - Не удалось удалить пользователя $username!"
         else
             echo " - Пользователь $username не найден!"
