@@ -28,7 +28,7 @@ isRoot() {
     [ $(id -u) -eq 0 ] && return 0 || return 1
 }
 
-shadow-useradd() {
+addUser() {
     if isRoot; then
         [ "$username" = "root" ] && return 0
         if grep -q "^$username:" /etc/passwd; then
@@ -47,7 +47,7 @@ shadow-useradd() {
     fi
 }
 
-shadow-userdel() {
+delUser() {
     if isRoot; then
         [ "$username" = "root" ] && return 0
         if grep -q "^$username:" /etc/passwd; then
